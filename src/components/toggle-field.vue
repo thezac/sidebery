@@ -1,35 +1,32 @@
 <template lang="pug">
-.ToggleField(:data-inline="inline" :data-inactive="inactive" @click="toggle")
+.ToggleField(:data-inline="props.inline" :data-inactive="props.inactive" @click="toggle")
   .body
-    .label(:style="{ color }") {{t(label)}}
-    ToggleInput.input(:value="value")
-  .note(v-if="note") {{note}}
+    .label(:style="{ color: props.color }") {{translate(props.label)}}
+    ToggleInput.input(:value="props.value")
+  .note(v-if="props.note") {{props.note}}
   slot
 </template>
 
-<script>
-import ToggleInput from './toggle-input'
+<script lang="ts" setup>
+import { translate } from 'src/dict'
+import ToggleInput from './toggle-input.vue'
 
-export default {
-  components: {
-    ToggleInput,
-  },
+interface ToggleFieldProps {
+  value: boolean | null | undefined
+  label: string
+  inactive?: boolean
+  field?: boolean
+  inline?: boolean
+  color?: string
+  note?: string
+}
 
-  props: {
-    value: Boolean,
-    label: String,
-    inactive: Boolean,
-    field: Boolean,
-    inline: Boolean,
-    color: String,
-    note: String,
-  },
+const emit = defineEmits(['toggle', 'update:value'])
+const props = defineProps<ToggleFieldProps>()
 
-  methods: {
-    toggle() {
-      if (this.inactive) return
-      this.$emit('input', !this.value)
-    },
-  },
+function toggle(): void {
+  if (props.inactive) return
+  emit('update:value', !props.value)
+  emit('toggle', !props.value)
 }
 </script>

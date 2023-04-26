@@ -1,57 +1,69 @@
 <template lang="pug">
-.TextField(:data-inactive="inactive" @click="focus")
+.TextField(:data-inactive="props.inactive" @click="focus")
   .body
-    .label {{t(label)}}
+    .label {{translate(props.label)}}
     TextInput(
-      ref="input"
-      :value="value"
-      :padding="padding"
-      :or="or"
-      :filter="filter"
-      :line="line"
-      :tabindex="tabindex"
-      :password="password"
-      :valid="valid"
-      :width="inputWidth"
-      @input="$emit('input', $event)"
-      @keydown="$emit('keydown', $event)")
-  .note(v-if="note") {{note}}
+      ref="inputEl"
+      :value="props.value"
+      :padding="props.padding"
+      :or="props.or"
+      :filter="props.filter"
+      :line="props.line"
+      :tabindex="props.tabindex"
+      :password="props.password"
+      :valid="props.valid"
+      :width="props.inputWidth"
+      @update:value="emit('update:value', $event)"
+      @keydown="emit('keydown', $event)")
+  .note(v-if="props.note") {{props.note}}
 </template>
 
-<script>
-import TextInput from './text-input'
+<script lang="ts" setup>
+import { ref } from 'vue'
+import { translate } from 'src/dict'
+import TextInput from './text-input.vue'
+import { TextInputComponent } from 'src/types'
 
-export default {
-  components: {
-    TextInput,
-  },
-
-  props: {
-    value: [String, Number],
-    valid: [String, Boolean],
-    padding: {
-      type: Number,
-      default: () => 0,
-    },
-    or: String,
-    filter: Function,
-    line: Boolean,
-    tabindex: {
-      type: String,
-      default: () => '0',
-    },
-    password: Boolean,
-    label: String,
-    inactive: Boolean,
-    note: String,
-    inputWidth: String,
-  },
-
-  methods: {
-    focus() {
-      if (!this.$refs.input) return
-      this.$refs.input.focus()
-    },
-  },
+interface TextFieldProps {
+  value: string | number
+  valid?: string | boolean
+  padding?: number
+  or?: string
+  filter?: (e: Event) => string
+  line?: boolean
+  tabindex?: string
+  password?: boolean
+  label?: string
+  inactive?: boolean
+  note?: string
+  inputWidth?: string
 }
+
+const emit = defineEmits(['update:value', 'keydown'])
+const props = withDefaults(defineProps<TextFieldProps>(), { padding: 0, tabindex: '0' })
+
+const inputEl = ref<TextInputComponent | null>(null)
+
+function focus(): void {
+  inputEl.value?.focus()
+}
+
+function error() {
+  inputEl.value?.error()
+}
+
+function recalcTextHeight() {
+  inputEl.value?.recalcTextHeight()
+}
+
+function selectAll() {
+  inputEl.value?.selectAll()
+}
+
+defineExpose<TextInputComponent>({
+  focus,
+  error,
+  recalcTextHeight,
+  selectAll,
+})
 </script>

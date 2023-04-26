@@ -1,20 +1,17 @@
 <template lang="pug">
-.InfoField(@click="onClick")
-  .label {{t(label)}}
-  .info {{value}}
+.InfoField(:data-inactive="props.inactive" @click="onClick")
+  .body
+    .label {{translate(props.label)}}
+    .info(v-if="props.value") {{props.value}}
 </template>
 
-<script>
-export default {
-  props: {
-    value: String,
-    label: String,
-  },
+<script lang="ts" setup>
+import { translate } from 'src/dict'
 
-  methods: {
-    onClick(e) {
-      this.$emit('click', e)
-    },
-  },
+const emit = defineEmits(['click'])
+const props = defineProps<{ value?: string; label?: string; inactive?: boolean }>()
+
+function onClick(e: DOMEvent<MouseEvent>): void {
+  emit('click', e)
 }
 </script>

@@ -1,0 +1,152 @@
+@import '../../../utils'
+
+#root
+  --history-item-height: 30px
+  --history-item-margin: var(--general-margin)
+  --history-item-border-radius: var(--general-border-radius)
+  --history-item-padding-left: 6px
+  --history-item-padding-right: 5px
+#root[data-density="compact"]
+  --history-item-height: 27px
+  --history-item-padding-left: 6px
+  --history-item-padding-right: 4px
+#root[data-density="loose"]
+  --history-item-height: 32px
+  --history-item-padding-left: 7px
+  --history-item-padding-right: 6px
+
+.HistoryPanel
+  position: absolute
+  display: flex
+  width: 100%
+  height: 100%
+  flex-direction: column
+  z-index: 100
+  transition: transform var(--d-fast), opacity var(--d-fast), z-index var(--d-fast)
+  min-height: 150px
+.sub-panel .HistoryPanel
+  position: relative
+  overflow: hidden
+  padding-top: var(--history-item-margin)
+
+.HistoryPanel .SubListTitle[data-folded="false"]
+  position: sticky
+  top: 0px
+
+.HistoryPanel .history-groups
+  position: relative
+  padding-bottom: 64px
+
+.HistoryPanel .group
+  position: relative
+
+.HistoryPanel .group-list
+  position: relative
+  padding: 0 0 8px
+
+.HistoryPanel .item
+  position: relative
+  padding: 0 var(--history-item-margin) var(--history-item-margin)
+
+.HistoryPanel .item .body
+  position: relative
+  display: flex
+  align-items: center
+  height: var(--history-item-height)
+  border-radius: var(--history-item-border-radius)
+  background-color: var(--frame-el-bg)
+  box-shadow: var(--frame-el-shadow)
+  &:before
+    content: ''
+    position: absolute
+    top: 0
+    left: 0
+    width: 100%
+    height: 100%
+    border-radius: var(--history-item-border-radius)
+.HistoryPanel .item:hover .body:before
+  background-color: var(--frame-el-overlay-hover-bg)
+.HistoryPanel .item:active .body:before
+  background-color: var(--frame-el-overlay-clicked-bg)
+  box-shadow: inset 0 0 0 1px #00000012
+.HistoryPanel .item[data-sel="true"] .body:before
+  background-color: var(--frame-el-overlay-selected-bg)
+  box-shadow: inset 0 0 0 1px var(--frame-el-overlay-selected-border)
+
+.HistoryPanel .item .fav
+  position: relative
+  width: 16px
+  height: 16px
+  flex-shrink: 0
+  margin: 0 0 0 var(--history-item-padding-left)
+  cursor: pointer
+  > svg, > img
+    position: absolute
+    width: 16px
+    height: 16px
+    top: 0
+    left: 0
+    fill: var(--frame-fg)
+  > svg
+    opacity: .7
+  &:hover
+    opacity: .7
+  &:active
+    opacity: .5
+
+.HistoryPanel .item .inline-info
+  position: relative
+  margin: 0 var(--history-item-padding-right) 0 5px
+  font-size: rem(11)
+  color: var(--frame-fg)
+  white-space: nowrap
+  overflow: hidden
+  flex-shrink: 0
+  opacity: .7
+
+.HistoryPanel .item .title
+  position: relative
+  width: 100%
+  margin: 0 0 1px 5px
+  font-size: rem(14)
+  color: var(--frame-fg)
+  white-space: nowrap
+  overflow: hidden
+  transition: transform var(--d-fast), color var(--d-fast)
+  mask: linear-gradient(-90deg, transparent, #000000 12px, #000000)
+
+.HistoryPanel .history-groups .LoadingDots
+  height: 36px
+
+
+.HistoryPanel .controls
+  position: relative
+  display: flex
+  flex-direction: column
+  justify-content: center
+  align-items: center
+  padding: 16px 8px 0
+  transition: opacity var(--d-fast)
+  &[data-loading="true"]
+    opacity: .3
+  &[data-all-loaded="true"]
+    opacity: 0
+    pointer-events: none
+
+.HistoryPanel .controls .note
+  position: relative
+  text-align: center
+  font-size: rem(13)
+  font-weight: 700
+  color: var(--frame-fg)
+  cursor: pointer
+  user-select: none
+  opacity: .7
+  &:hover
+    opacity: .5
+  &:active
+    opacity: .3
+
+#root[data-search="true"] .HistoryPanel .controls
+  opacity: 0
+  pointer-events: none

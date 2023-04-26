@@ -1,29 +1,30 @@
 {
   "env": {
+    "node": true,
     "browser": true,
-    "es6": true
+    "es2020": true
   },
-  "extends": ["eslint:recommended", "plugin:vue/recommended", "plugin:prettier/recommended"],
+  "extends": [
+    "eslint:recommended",
+    "plugin:vue/recommended",
+    "plugin:prettier/recommended"
+  ],
   "parserOptions": {
-    "ecmaVersion": 2018,
+    "ecmaVersion": "latest",
     "sourceType": "module"
   },
   "rules": {
-    "no-console": 2,
+    "no-console": "warn",
     "indent": ["error", 2, { "SwitchCase": 1 }],
     "linebreak-style": ["error", "unix"],
     "quotes": ["error", "single", { "avoidEscape": true }],
     "semi": ["error", "never"],
     "require-atomic-updates": "off",
-    "vue/html-self-closing": "off",
-    "vue/require-default-prop": "off",
     "no-async-promise-executor": "off",
-    "no-prototype-builtins": "off"
+    "no-prototype-builtins": "off",
+    "no-constant-condition": ["error", { "checkLoops": false }]
   },
   "globals": {
-    "Vue": true,
-    "Vuex": true,
-    "Utils": true,
     "process": true,
     "browser": true,
     "global": true,
@@ -41,6 +42,62 @@
     "pit": true,
     "require": true,
     "xdescribe": true,
-    "xit": true
-  }
+    "xit": true,
+    "DOMEvent": true,
+    "defineExpose": true,
+    "defineProps": true,
+    "defineEmits": true,
+    "withDefaults": true,
+    "MozFocusEvent": true,
+    "ID": true
+  },
+  "plugins": [],
+  "overrides": [
+    {
+      "files": ["src/**/*.ts", "src/**/*.vue"],
+      "extends": [
+        "eslint:recommended",
+        "plugin:vue/recommended",
+        "plugin:@typescript-eslint/eslint-recommended",
+        "plugin:@typescript-eslint/recommended",
+        "plugin:@typescript-eslint/recommended-requiring-type-checking",
+        "prettier",
+        "@vue/typescript",
+        "plugin:prettier/recommended"
+      ],
+      "parser": "vue-eslint-parser",
+      "parserOptions": {
+        "parser": "@typescript-eslint/parser",
+        "ecmaVersion": "latest",
+        "sourceType": "module",
+        "project": "tsconfig.json",
+        "tsconfigRootDir": "."
+      },
+      "rules": {
+        "@typescript-eslint/no-unused-vars": "off",
+        "@typescript-eslint/no-namespace": "off",
+        "@typescript-eslint/no-misused-promises": "off",
+        "@typescript-eslint/no-floating-promises": "off",
+        "@typescript-eslint/no-unnecessary-type-assertion": "off",
+        "@typescript-eslint/unbound-method": "off",
+        "@typescript-eslint/no-non-null-assertion": "error",
+        "@typescript-eslint/no-unsafe-assignment": "off",
+        "@typescript-eslint/restrict-template-expressions": "off",
+        "vue/multi-word-component-names": "off",
+        "vue/custom-event-name-casing": "off",
+        "vue/no-mutating-props": "off",
+        "no-console": "warn",
+        "indent": ["error", 2, { "SwitchCase": 1 }],
+        "linebreak-style": ["error", "unix"],
+        "quotes": ["error", "single", { "avoidEscape": true }],
+        "semi": ["error", "never"],
+        "require-atomic-updates": "off",
+        "vue/html-self-closing": "off",
+        "vue/require-default-prop": "off",
+        "no-async-promise-executor": "off",
+        "no-prototype-builtins": "off"
+      },
+      "plugins": ["@typescript-eslint"]
+    }
+  ]
 }

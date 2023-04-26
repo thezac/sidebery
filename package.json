@@ -1,71 +1,50 @@
 {
   "name": "sidebery",
-  "version": "4.10.2",
+  "version": "5.0.0b31",
   "description": "Manage your tabs and bookmarks in sidebar",
   "main": "index.js",
   "scripts": {
-    "dev.vendor": "node build/vendor.js -- dev",
-    "dev.sidebar": "parcel watch ./src/sidebar/sidebar.js -d ./addon/sidebar/ --public-url ./ --no-autoinstall --log-level 4",
-    "dev.settings": "parcel watch ./src/page.settings/settings.js -d ./addon/settings/ --public-url ./ --no-autoinstall --log-level 4",
-    "dev.group": "parcel watch ./src/page.group/group.js -d ./addon/group/ --public-url ./ --no-autoinstall --log-level 4",
-    "dev.url": "parcel watch ./src/page.url/url.js -d ./addon/url/ --public-url ./ --no-autoinstall --log-level 4",
-    "dev.proxy": "parcel watch ./src/popup.proxy/proxy.js -d ./addon/proxy/ --public-url ./ --no-autoinstall --log-level 4",
-    "dev.themes.default": "stylus ./src/styles/themes/default/sidebar.styl ./src/styles/themes/default/settings.styl ./src/styles/themes/default/group.styl ./src/styles/themes/default/url.styl ./src/styles/themes/default/proxy.styl -w --out ./addon/themes/default/",
-    "dev.themes.tactile": "stylus ./src/styles/themes/tactile/sidebar.styl ./src/styles/themes/tactile/url.styl ./src/styles/themes/tactile/group.styl ./src/styles/themes/tactile/proxy.styl -w --out ./addon/themes/tactile/",
-    "dev.ext.esr": "web-ext run --source-dir ./addon -f firefox-esr --keep-profile-changes --firefox-profile ./build/profile-esr",
-    "dev.ext": "web-ext run --source-dir ./addon -f firefox --keep-profile-changes --firefox-profile ./build/profile-stable",
-    "dev.ext.beta": "web-ext run --source-dir ./addon -f firefox-beta --keep-profile-changes --firefox-profile ./build/profile-beta",
-    "dev.ext.nightly": "web-ext run --source-dir ./addon -f firefox-nightly --keep-profile-changes --firefox-profile ./build/profile-nightly",
-    "build.vendor": "node build/vendor.js -- build",
-    "build.sidebar": "parcel build ./src/sidebar/sidebar.js -d ./addon/sidebar/ --public-url ./ --no-autoinstall --no-source-maps --no-cache",
-    "build.settings": "parcel build ./src/page.settings/settings.js -d ./addon/settings/ --public-url ./ --no-autoinstall --no-source-maps --no-cache",
-    "build.group": "parcel build ./src/page.group/group.js -d ./addon/group/ --public-url ./ --no-autoinstall --no-source-maps --no-cache",
-    "build.url": "parcel build ./src/page.url/url.js -d ./addon/url/ --public-url ./ --no-autoinstall --no-source-maps --no-cache",
-    "build.proxy": "parcel build ./src/popup.proxy/proxy.js -d ./addon/proxy/ --public-url ./ --no-autoinstall --no-source-maps --no-cache",
-    "build.themes.default": "stylus ./src/styles/themes/default/sidebar.styl ./src/styles/themes/default/settings.styl ./src/styles/themes/default/group.styl ./src/styles/themes/default/url.styl ./src/styles/themes/default/proxy.styl -c --out ./addon/themes/default/",
-    "build.themes.tactile": "stylus ./src/styles/themes/tactile/sidebar.styl ./src/styles/themes/tactile/url.styl ./src/styles/themes/tactile/group.styl ./src/styles/themes/tactile/proxy.styl -c --out ./addon/themes/tactile/",
-    "build.themes": "npm run build.themes.default && npm run build.themes.tactile",
+    "dev": "node build/all.js --dev",
+    "dev.styles": "node build/styles.js --dev",
+    "dev.html": "node build/html.js --dev",
+    "dev.copy": "node build/copy.js --dev",
+    "dev.scripts": "node build/scripts.js --dev",
+    "dev.run": "node build/webext.run.mjs --dev",
+    "build.styles": "node build/styles.js",
+    "build.html": "node build/html.js",
+    "build.copy": "node build/copy.js",
+    "build.scripts": "node build/scripts.js",
     "build.ext": "web-ext build --source-dir ./addon -a dist/ -i __tests__",
-    "build": "npm run build.vendor && npm run build.sidebar && npm run build.settings && npm run build.group && npm run build.proxy && npm run build.url && npm run build.themes",
-    "clear.cache": "rm -rf .cache",
+    "build.run": "node build/webext.run.mjs",
+    "build": "node build/all.js",
     "clear.npm": "rm -rf node_modules package-lock.json",
-    "clear.sidebar": "find ./addon/sidebar -type f -not -name index.html -delete",
-    "clear.settings": "find ./addon/settings -type f -not -name settings.html -delete",
-    "clear.group": "find ./addon/group -type f -not -name group.html -delete",
-    "clear.proxy": "find ./addon/proxy -type f -not -name proxy.html -delete",
-    "clear.url": "find ./addon/url -type f -not -name url.html -delete",
-    "clear.themes": "find ./addon/themes/ -type f -not -name __preserve-dir -delete",
-    "clear.vendor": "find ./addon/vendor/ -type f -not -name __preserve-dir -delete",
-    "clear": "npm run clear.cache && npm run clear.sidebar && npm run clear.settings && npm run clear.group && npm run clear.proxy && npm run clear.url && npm run clear.themes && npm run clear.vendor",
-    "lint": "eslint ./addon ./src && web-ext lint -s ./addon",
+    "clear": "rm -rf addon",
+    "lint": "eslint ./src && web-ext lint -s ./addon",
     "test": "./node_modules/.bin/jest"
   },
   "author": "mbnuqw",
   "license": "MIT",
   "devDependencies": {
-    "@babel/core": "7.13.10",
-    "@babel/plugin-proposal-object-rest-spread": "7.13.8",
-    "@babel/plugin-transform-modules-commonjs": "7.13.8",
-    "@babel/preset-env": "7.13.12",
-    "@vue/component-compiler-utils": "3.2.0",
-    "eslint": "7.22.0",
-    "eslint-config-prettier": "8.1.0",
-    "eslint-plugin-prettier": "3.3.1",
-    "eslint-plugin-vue": "7.8.0",
-    "jest": "26.6.3",
-    "parcel-bundler": "1.12.5",
+    "@typescript-eslint/eslint-plugin": "5.55.0",
+    "@typescript-eslint/parser": "5.55.0",
+    "@volar/vue-language-plugin-pug": "1.2.0",
+    "@vue/compiler-sfc": "3.2.47",
+    "@vue/eslint-config-typescript": "11.0.2",
+    "csso": "5.0.5",
+    "esbuild": "0.17.12",
+    "eslint": "8.36.0",
+    "eslint-config-prettier": "8.7.0",
+    "eslint-plugin-prettier": "4.2.1",
+    "eslint-plugin-vue": "9.9.0",
+    "jest": "29.5.0",
+    "prettier": "2.8.4",
     "pug": "3.0.2",
-    "regenerator-runtime": "0.13.7",
-    "stylus": "0.54.8",
-    "vue-hot-reload-api": "2.3.4",
-    "vue-server-renderer": "2.6.12",
-    "vue-template-compiler": "2.6.12",
-    "vue-template-es2015-compiler": "1.9.1",
-    "web-ext": "6.0.0"
+    "stylus": "0.59.0",
+    "typescript": "5.0.2",
+    "web-ext": "7.5.0"
   },
   "dependencies": {
-    "vue": "2.6.12",
-    "vuex": "3.6.2"
+    "vue": "3.2.47"
   },
   "prettier": {
     "arrowParens": "avoid",
@@ -77,10 +56,11 @@
     "useTabs": false
   },
   "alias": {
-    "vue": "./node_modules/vue/dist/vue.runtime.esm.js"
+    "vue": "./node_modules/vue/dist/vue.runtime.esm-browser.js",
+    "src": "./src"
   },
   "browserslist": [
-    "last 1 Chrome version"
+    "Firefox >= 91"
   ],
   "jest": {
     "moduleFileExtensions": [
@@ -95,5 +75,6 @@
       "**/addon/**/__tests__/*.test.js",
       "**/src/**/__tests__/*.test.js"
     ]
-  }
+  },
+  "sideEffects": false
 }

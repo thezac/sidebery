@@ -1,19 +1,16 @@
 <template lang="pug">
-.ToggleInput(:data-active="value" @click="toggle")
-  .opt.-false {{t('settings.opt_false')}}
-  .opt.-true {{t('settings.opt_true')}}
+.ToggleInput(:data-active="props.value" @click="toggle")
+  .opt.-true: p {{translate('settings.opt_true')}}
+  .opt.-false: p {{translate('settings.opt_false')}}
 </template>
 
-<script>
-export default {
-  props: {
-    value: Boolean,
-  },
+<script lang="ts" setup>
+import { translate } from 'src/dict'
 
-  methods: {
-    toggle() {
-      this.$emit('input', !this.value)
-    },
-  },
+const emit = defineEmits(['update:value'])
+const props = defineProps<{ value: boolean | null | undefined }>()
+
+function toggle(): void {
+  emit('update:value', !props.value)
 }
 </script>

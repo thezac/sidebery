@@ -1,59 +1,52 @@
 <template lang="pug">
-.CountField(:data-active="value !== off" :data-inactive="inactive" @click="toggle"): .body
-  .label {{t(label)}}
-  .input-group(@click.stop="")
-    TextInput.text-input(
-      :value="value"
-      :line="true"
-      :filter="valueFilter"
-      @input="onInput"
-      @change="onChange")
-    ToggleInput.toggle-input(:value="value !== off" @input="toggle")
+.CountField(:data-active="props.value !== off" :data-inactive="props.inactive" @click="toggle")
+  .body
+    .label {{translate(props.label)}}
+    .input-group(@click.stop)
+      TextInput.text-input(
+        :value="props.value"
+        :line="true"
+        :filter="valueFilter"
+        @update:value="onInput"
+        @change="onChange")
+      ToggleInput.toggle-input(:value="props.value !== props.off" @update:value="toggle")
 </template>
 
-<script>
-import TextInput from './text-input'
-import ToggleInput from './toggle-input'
+<script lang="ts" setup>
+import { translate } from 'src/dict'
+import TextInput from './text-input.vue'
+import ToggleInput from './toggle-input.vue'
 
-export default {
-  components: {
-    TextInput,
-    ToggleInput,
-  },
+interface CountFieldProps {
+  label?: string
+  value?: number | string
+  or?: number | string
+  inactive?: boolean
+  off?: number
+  min?: number
+}
 
-  props: {
-    label: String,
-    value: [Number, String],
-    or: [Number, String],
-    inactive: Boolean,
-    off: {
-      type: Number,
-      default: 0,
-    },
-    min: Number,
-  },
+const emit = defineEmits(['update:value', 'change'])
+const props = withDefaults(defineProps<CountFieldProps>(), { min: 0 })
 
-  methods: {
-    onInput(val) {
-      this.$emit('input', val)
-    },
+function onInput(val: string): void {
+  emit('update:value', val)
+}
 
-    onChange() {
-      this.$emit('change', this.value)
-    },
+function onChange(): void {
+  emit('change', props.value)
+}
 
-    valueFilter(e) {
-      let val = parseInt(e.target.value)
-      if (isNaN(val)) return 0
-      else if (val < this.min) return this.min
-      else return val
-    },
+function valueFilter(e: Event): number {
+  let val = parseInt((e.target as HTMLInputElement).value)
+  if (isNaN(val)) return 0
+  else if (props.min !== undefined && val < props.min) return props.min
+  else return val
+}
 
-    toggle() {
-      if (this.inactive) return
-      else if (this.value === this.off) this.$emit('input', this.min || this.off + 1)
-      else this.$emit('input', this.off)
-    },
-  },
+function toggle(): void {
+  if (props.inactive) return
+  else if (props.value === props.off && props.off) emit('update:value', props.min ?? props.off + 1)
+  else emit('update:value', props.off)
 }
 </script>

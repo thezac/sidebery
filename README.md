@@ -1,90 +1,81 @@
 # Sidebery
 
-[![https://addons.mozilla.org/firefox/addon/sidebery/](https://addons.cdn.mozilla.net/static/img/addons-buttons/AMO-button_2.png)](https://addons.mozilla.org/firefox/addon/sidebery/)
+Firefox extension for managing tabs and bookmarks in sidebar.
 
+## Install
+
+**Stable** (4.10.2):
+ [Release page](https://github.com/mbnuqw/sidebery/releases/tag/v4.10.2) |
+ [Addon page](https://addons.mozilla.org/firefox/addon/sidebery/) |
+ [Install](https://addons.mozilla.org/firefox/downloads/file/3994928/sidebery-4.10.2.xpi)  
+**Beta** (5.0.0b31):
+ [Release page](https://github.com/mbnuqw/sidebery/releases/tag/v5.0.0b31) |
+ [Install](https://github.com/mbnuqw/sidebery/releases/download/v5.0.0b31/sidebery-5.0.0b31.xpi)
+
+> Note: Before installing the beta version make sure to save backup of the Add-on data (Sidebery settings / Help / Export).
 
 ## About
 
-Sidebery provides the list of tabs structured in a tree and bookmarks within the customizable panels. It aims to be fast, beautiful* and configurable. Some of the key features:
+Sidebery is a highly configurable sidebar with panels of different types. Some of the key features:
 
-### Vertical tabs layout (flat or tree)
-
-You can use a simple flat list of tabs or tree structure. Tree layout allows you to fold sub-tries, creates groups with a custom name to organize open pages.
-
-### Bookmarks panel
-
-Simple catalogs of your bookmarks. You can drag and drop links or tabs to create bookmarks and vice-versa. Basic operations: open in new window / sort / create / edit / delete.
-
-Other bookmarks features: 
-- Automatically delete an open bookmark from "Other Bookmarks" folder.
-- Highlight open bookmarks and activate its tab instead of opening new on clicking.
-
-### Tabs panels
-
-Configurable panels will help you sort your tabs.
-
-### Containers management
-
-You can set "Include" and "Exclude" url-rules, proxy config and UserAgent header for each container.
-
-### Customizable context menu
-
-Sidebery allows you to change the context menu for tabs and bookmarks. You can enable/disable/move different options, create sub-menus/separators.
-
-### Multi-selection with right mouse button or keyboard shortcuts
-
-You can select multiple tabs or bookmarks only with the mouse - push right mouse button and then move the cursor to adjust selection range.  
-`note: This feature is not working with the native context menu.`
-
-Also, you can use ctrl+click/shift+click method or use keyboard shortcuts.
-
-### Customizable styles
-
-Sidebery provides full control of styles for sidebar and group page via variables and custom CSS.
-
-> NOTE: To get currently available css-selectors use debugger:
->   - Enter "about:debugging" in the URL bar
->   - In the left-hand menu, click This Firefox (or This Nightly)
->   - Click Inspect next to Sidebery extension
->   - Select frame to inspect
->     - Click on the rectangular icon (with three sections) in top-right area of the debugger page
->     - Select "/sidebar/index.html" for sidebar frame
->     - Select "/group/group.html" for group page frame
->   - Browse "Inspector" tab
-
-
-### Snapshots
-
-You can setup auto snapshots that will keep info about open windows and tabs.
-
-
----
-
-## Usage
-
-- [User guide](https://github.com/mbnuqw/sidebery/wiki/User-guide)
-  - [Containers](https://github.com/mbnuqw/sidebery/wiki/User-guide#containers)
-  - [Panels](https://github.com/mbnuqw/sidebery/wiki/User-guide#panels)
-  - [Tabs](https://github.com/mbnuqw/sidebery/wiki/User-guide#tabs)
-  - [Bookmarks](https://github.com/mbnuqw/sidebery/wiki/User-guide#bookmarks)
-  - [Drag and Drop](https://github.com/mbnuqw/sidebery/wiki/User-guide#drag-and-drop)
-- [Firefox Styles Snippets (via userChrome.css)](https://github.com/mbnuqw/sidebery/wiki/Firefox-Styles-Snippets-(via-userChrome.css))
-  - [Completely hide tabs strip](https://github.com/mbnuqw/sidebery/wiki/Firefox-Styles-Snippets-(via-userChrome.css)#completely-hide-tabs-strip)
-  - [Hide sidebar top-menu](https://github.com/mbnuqw/sidebery/wiki/Firefox-Styles-Snippets-(via-userChrome.css)#hide-sidebar-top-menu)
-- [Sidebery Styles Snippets](https://github.com/mbnuqw/sidebery/wiki/Sidebery-Styles-Snippets)
-
-
----
+- Vertical tabs panels with tree or flat layout
+- Bookmarks panels
+- (v5) History panel
+- (v5) Search in panels
+- Customizable context menu
+- Customizable styles
+- Snapshots (saved windows/panels/tabs)
+- ...and more
 
 ## Build
 
+> Prerequisites: latest LTS Node.js version
+
+1. Install dependencies: `npm install`
+2. Build all parts of Add-on: `npm run build`
+3. Create Add-on archive in `./dist`: `npm run build.ext`
+
+After creating the Add-on archive, you can then use the version in Firefox as follows:
+
+1. Open Firefox
+2. Go to `about:debbuging`
+3. Go to "This Firefox"
+4. At "Temporary Extensions" click on "Load Temporary Add-on..."
+5. Select the `.zip` file in the `dist` directory.
+6. Close the settings tab
+7. Your Firefox now always runs with the development version
+8. For updating: Repeat all steps.
+
+## Development
+
+> Prerequisites: latest LTS Node.js version
+
 Install dependencies: `npm install`  
-Build all parts of addon in release mode: `npm run build`  
-Run ./addon in browser: `npm run dev.ext[.beta|.nightly]`  
-Create addon archive in ./dist: `npm run build.ext`  
+Build and watch for changes: `npm run dev`  
+Run browser with Add-on: `npm run dev.run -- <firefox-executable>`
 
----
+## License
 
-## Licence
+[MIT](./LICENSE)
 
-MIT
+## Donate
+
+You can donate to this project, which will motivate me to spend more time on Sidebery.
+
+<details><summary><b> Bitcoin (BTC): </b></summary>
+
+```
+bc1q2drx3x5pfl0c68urwztvjrwgksg9u3l7mn4g4m
+```
+![btc-bc1q2drx3x5pfl0c68urwztvjrwgksg9u3l7mn4g4m](https://user-images.githubusercontent.com/6276694/215584021-b1eee3ab-ca62-4a81-acb4-cd69c27c734a.png)
+
+</details>
+
+<details><summary><b> Ethereum (ETH): </b></summary>
+
+```
+0x11667D20AB328194AEEc68F9385CCcf713607929
+```
+![eth-0x11667D20AB328194AEEc68F9385CCcf713607929](https://user-images.githubusercontent.com/6276694/215587549-39505f92-0f80-43ec-bec1-42bf8cd570c4.png)
+
+</details>

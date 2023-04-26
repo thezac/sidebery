@@ -1,0 +1,311 @@
+{
+  "manifest_version": 2,
+  "browser_specific_settings": {
+    "gecko": {
+      "id": "{3c078156-979c-498b-8990-85f7987dd929}",
+      "strict_min_version": "102.0",
+      "update_url": "https://raw.githubusercontent.com/mbnuqw/sidebery/v5/updates.json"
+    }
+  },
+  "author": "mbnuqw",
+  "name": "__MSG_ExtName__",
+  "version": "5.0.0b31",
+  "default_locale": "en",
+  "description": "__MSG_ExtDesc__",
+  "homepage_url": "https://github.com/mbnuqw/sidebery",
+  "icons": {
+    "48": "./assets/logo.svg",
+    "96": "./assets/logo.svg"
+  },
+
+  "options_ui": {
+    "open_in_tab": true,
+    "page": "page.setup/setup.html"
+  },
+
+  "permissions": [
+    "activeTab",
+    "tabs",
+    "contextualIdentities",
+    "cookies",
+    "storage",
+    "unlimitedStorage",
+    "sessions",
+    "menus",
+    "menus.overrideContext",
+    "search",
+    "theme"
+  ],
+  
+  "optional_permissions": [
+    "<all_urls>",
+    "proxy",
+    "webRequest",
+    "webRequestBlocking",
+    "bookmarks",
+    "tabHide",
+    "clipboardWrite",
+    "history"
+  ],
+
+  "sidebar_action": {
+    "default_icon": "./assets/logo-native.svg",
+    "default_title": "Sidebery",
+    "default_panel": "./sidebar/sidebar.html"
+  },
+
+  "page_action": {
+    "browser_style": false,
+    "default_icon": "./assets/proxy-native.svg",
+    "default_title": "Sidebery proxy off",
+    "default_popup": "./popup.proxy/proxy.html"
+  },
+
+  "commands": {
+    "_execute_sidebar_action": {
+      "suggested_key": {
+        "default": "Ctrl+E",
+        "mac": "MacCtrl+E",
+        "windows": "F1"
+      },
+      "description": "__MSG_KbOpenSidebarPanel__"
+    },
+    "next_panel": {
+      "suggested_key": {
+        "default": "Alt+Period"
+      },
+      "description": "__MSG_KbNextPanel__"
+    },
+    "prev_panel": {
+      "suggested_key": {
+        "default": "Alt+Comma"
+      },
+      "description": "__MSG_KbPrevPanel__"
+    },
+    "new_tab_on_panel": {
+      "suggested_key": {
+        "default": "Ctrl+Space",
+        "mac": "MacCtrl+Space"
+      },
+      "description": "__MSG_KbOpenNewTabInCurrPanel__"
+    },
+    "new_tab_in_group": {
+      "suggested_key": {
+        "default": "Ctrl+Shift+Space",
+        "mac": "MacCtrl+Shift+Space"
+      },
+      "description": "__MSG_KbOpenNewTabAfter__"
+    },
+    "new_tab_as_first_child": {
+      "description": "__MSG_KbOpenNewTabAsFirstChild__"
+    },
+    "new_tab_as_last_child": {
+      "description": "__MSG_KbOpenNewTabAsLastChild__"
+    },
+    "rm_tab_on_panel": {
+      "description": "__MSG_KbRm__"
+    },
+    "select_all": {
+      "description": "__MSG_KbSelectAll__"
+    },
+    "up": {
+      "suggested_key": {
+        "default": "Alt+Up"
+      },
+      "description": "__MSG_KbUp__"
+    },
+    "down": {
+      "suggested_key": {
+        "default": "Alt+Down"
+      },
+      "description": "__MSG_KbDown__"
+    },
+    "up_shift": {
+      "suggested_key": {
+        "default": "Alt+Shift+Up"
+      },
+      "description": "__MSG_KbUpShift__"
+    },
+    "down_shift": {
+      "suggested_key": {
+        "default": "Alt+Shift+Down"
+      },
+      "description": "__MSG_KbDownShift__"
+    },
+    "activate": {
+      "suggested_key": {
+        "default": "Alt+Space"
+      },
+      "description": "__MSG_KbActivate__"
+    },
+    "reset_selection": {
+      "suggested_key": {
+        "default": "Alt+R"
+      },
+      "description": "__MSG_KbResetSelection__"
+    },
+    "menu": {
+      "description": "__MSG_KbMenu__"
+    },
+    "fold_branch": {
+      "description": "__MSG_KbFoldBranch__"
+    },
+    "expand_branch": {
+      "description": "__MSG_KbExpandBranch__"
+    },
+    "fold_inact_branches": {
+      "description": "__MSG_KbFoldInactBranches__"
+    },
+    "activate_prev_active_tab": {
+      "description": "__MSG_KbActPrevActTab__"
+    },
+    "activate_next_active_tab": {
+      "description": "__MSG_KbActNextActTab__"
+    },
+    "activate_panel_prev_active_tab": {
+      "description": "__MSG_KbActPanelPrevActTab__"
+    },
+    "activate_panel_next_active_tab": {
+      "description": "__MSG_KbActPanelNextActTab__"
+    },
+    "move_tab_to_active": {
+      "description": "__MSG_KbMoveTabToAct__"
+    },
+    "move_tabs_up": {
+      "description": "__MSG_KbMoveTabsUp__"
+    },
+    "move_tabs_down": {
+      "description": "__MSG_KbMoveTabsDown__"
+    },
+    "tabs_indent": {
+      "description": "__MSG_KbTabsIndent__"
+    },
+    "tabs_outdent": {
+      "description": "__MSG_KbTabsOutdent__"
+    },
+    "create_snapshot": {
+      "description": "__MSG_KbCreateSnapshot__"
+    },
+    "switch_to_panel_0": {
+      "description": "__MSG_KbSwitchToPanel0__"
+    },
+    "switch_to_panel_1": {
+      "description": "__MSG_KbSwitchToPanel1__"
+    },
+    "switch_to_panel_2": {
+      "description": "__MSG_KbSwitchToPanel2__"
+    },
+    "switch_to_panel_3": {
+      "description": "__MSG_KbSwitchToPanel3__"
+    },
+    "switch_to_panel_4": {
+      "description": "__MSG_KbSwitchToPanel4__"
+    },
+    "switch_to_panel_5": {
+      "description": "__MSG_KbSwitchToPanel5__"
+    },
+    "switch_to_panel_6": {
+      "description": "__MSG_KbSwitchToPanel6__"
+    },
+    "switch_to_panel_7": {
+      "description": "__MSG_KbSwitchToPanel7__"
+    },
+    "switch_to_panel_8": {
+      "description": "__MSG_KbSwitchToPanel8__"
+    },
+    "switch_to_panel_9": {
+      "description": "__MSG_KbSwitchToPanel9__"
+    },
+    "move_tabs_to_panel_0": {
+      "description": "__MSG_KbMoveTabsToPanel0__"
+    },
+    "move_tabs_to_panel_1": {
+      "description": "__MSG_KbMoveTabsToPanel1__"
+    },
+    "move_tabs_to_panel_2": {
+      "description": "__MSG_KbMoveTabsToPanel2__"
+    },
+    "move_tabs_to_panel_3": {
+      "description": "__MSG_KbMoveTabsToPanel3__"
+    },
+    "move_tabs_to_panel_4": {
+      "description": "__MSG_KbMoveTabsToPanel4__"
+    },
+    "move_tabs_to_panel_5": {
+      "description": "__MSG_KbMoveTabsToPanel5__"
+    },
+    "move_tabs_to_panel_6": {
+      "description": "__MSG_KbMoveTabsToPanel6__"
+    },
+    "move_tabs_to_panel_7": {
+      "description": "__MSG_KbMoveTabsToPanel7__"
+    },
+    "move_tabs_to_panel_8": {
+      "description": "__MSG_KbMoveTabsToPanel8__"
+    },
+    "move_tabs_to_panel_9": {
+      "description": "__MSG_KbMoveTabsToPanel9__"
+    },
+    "search": {
+      "description": "__MSG_KbSearch__"
+    },
+    "switch_to_parent_tab": {
+      "description": "__MSG_KbSwitchToParentTab__"
+    },
+    "switch_to_tab_0": {
+      "description": "__MSG_KbSwitchToTab0__"
+    },
+    "switch_to_tab_1": {
+      "description": "__MSG_KbSwitchToTab1__"
+    },
+    "switch_to_tab_2": {
+      "description": "__MSG_KbSwitchToTab2__"
+    },
+    "switch_to_tab_3": {
+      "description": "__MSG_KbSwitchToTab3__"
+    },
+    "switch_to_tab_4": {
+      "description": "__MSG_KbSwitchToTab4__"
+    },
+    "switch_to_tab_5": {
+      "description": "__MSG_KbSwitchToTab5__"
+    },
+    "switch_to_tab_6": {
+      "description": "__MSG_KbSwitchToTab6__"
+    },
+    "switch_to_tab_7": {
+      "description": "__MSG_KbSwitchToTab7__"
+    },
+    "switch_to_tab_8": {
+      "description": "__MSG_KbSwitchToTab8__"
+    },
+    "switch_to_tab_9": {
+      "description": "__MSG_KbSwitchToTab9__"
+    },
+    "switch_to_last_tab": {
+      "description": "__MSG_KbSwitchToLastTab__"
+    }
+  },
+
+  "browser_action": {
+    "default_icon": "./assets/logo-native.svg",
+    "default_title": "__MSG_ActionTitle__",
+    "default_area": "navbar",
+    "theme_icons": [
+      {
+        "light": "./assets/logo-native-light.svg",
+        "dark": "./assets/logo-native-dark.svg",
+        "size": 16
+      },
+      {
+        "light": "./assets/logo-native-light.svg",
+        "dark": "./assets/logo-native-dark.svg",
+        "size": 32
+      }
+    ]
+  },
+
+  "background": {
+    "page": "bg/background.html"
+  }
+}

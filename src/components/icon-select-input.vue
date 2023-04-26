@@ -1,25 +1,18 @@
 <template lang="pug">
 .IconSelectInput
   .icon(
-    v-for="o in opts"
-    :data-active="o === value"
+    v-for="opt in opts"
+    :data-active="opt === value"
     :data-color="fill"
-    @click="select(o)")
-    svg: use(:xlink:href="'#' + o")
+    @click="select(opt)")
+    svg: use(:xlink:href="'#' + opt")
 </template>
 
-<script>
-export default {
-  props: {
-    value: String,
-    opts: Array,
-    fill: String,
-  },
+<script lang="ts" setup>
+const emit = defineEmits(['input'])
+defineProps<{ value?: string; opts?: string[]; fill?: string }>()
 
-  methods: {
-    select(opt) {
-      this.$emit('input', opt)
-    },
-  },
+function select(opt: string): void {
+  emit('input', opt)
 }
 </script>

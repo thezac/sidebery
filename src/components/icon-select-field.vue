@@ -1,32 +1,26 @@
 <template lang="pug">
 .IconSelectField
-  .label {{t(label)}}
+  .label {{translate(props.label)}}
   SelectIconInput(
-    :value="value"
-    :opts="opts"
-    :fill="optFill"
-    @input="select")
+    :value="props.value"
+    :opts="props.opts"
+    :fill="props.optFill"
+    @update:value="select")
 </template>
 
-<script>
-import SelectIconInput from './icon-select-input'
+<script lang="ts" setup>
+import { translate } from 'src/dict'
+import SelectIconInput from './icon-select-input.vue'
 
-export default {
-  components: {
-    SelectIconInput,
-  },
+const emit = defineEmits(['update:value'])
+const props = defineProps<{
+  value?: string
+  label?: string
+  optFill?: string
+  opts?: string[]
+}>()
 
-  props: {
-    value: String,
-    label: String,
-    optFill: String,
-    opts: Array,
-  },
-
-  methods: {
-    select(option) {
-      this.$emit('input', option)
-    },
-  },
+function select(option: string): void {
+  emit('update:value', option)
 }
 </script>

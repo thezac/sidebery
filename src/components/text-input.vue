@@ -1,21 +1,21 @@
 <template lang="pug">
 .TextInput(
-  :data-active="isActive"
-  :data-empty="!value"
-  :data-valid="valid"
-  :data-wrong="wrongValueAnimation"
-  :data-width="width"
+  :data-active="state.isActive"
+  :data-empty="!props.value"
+  :data-valid="props.valid"
+  :data-wrong="state.wrongValueAnimation"
+  :data-width="props.width"
   @animationend="onAnimationEnd")
   input(
-    v-if="line"
-    ref="text"
+    v-if="props.line"
+    ref="textEl"
     autocomplete="off"
     autocorrect="off"
     autocapitalize="off"
     spellcheck="false"
-    :type="password ? 'password' : 'text'"
-    :tabindex="tabindex"
-    :value="value"
+    :type="props.password ? 'password' : 'text'"
+    :tabindex="props.tabindex"
+    :value="props.value"
     @input="onInput"
     @focus="onFocus"
     @blur="onBlur"
@@ -23,99 +23,102 @@
     @keydown="onKD")
   textarea(
     v-else
-    ref="text",
+    ref="textEl",
     autocomplete="off"
     autocorrect="off"
     autocapitalize="off"
     spellcheck="false"
-    :tabindex="tabindex"
-    :value="value"
+    :tabindex="props.tabindex"
+    :value="props.value"
     @input="onInput"
     @focus="onFocus"
     @blur="onBlur"
     @change="onChange"
     @keydown="onKD")
-  .placeholder(v-if="or") {{or}}
+  .placeholder(v-if="props.or") {{props.or}}
 </template>
 
-<script>
-export default {
-  props: {
-    value: [String, Number],
-    valid: [String, Boolean],
-    padding: {
-      type: Number,
-      default: () => 0,
-    },
-    or: String,
-    filter: Function,
-    line: Boolean,
-    tabindex: {
-      type: String,
-      default: () => '0',
-    },
-    password: Boolean,
-    width: String,
-  },
+<script lang="ts" setup>
+import { ref, reactive, onMounted } from 'vue'
+import { TextInputComponent } from 'src/types'
 
-  data() {
-    return {
-      isActive: false,
-      wrongValueAnimation: false,
-      val: '',
-    }
-  },
-
-  mounted() {
-    this.recalcTextHeight()
-  },
-
-  methods: {
-    onFocus() {
-      this.isActive = true
-      this.$emit('focus', this.$refs.text.value)
-    },
-
-    onBlur() {
-      this.isActive = false
-      if (this.$refs.text) this.$emit('blur', this.$refs.text.value)
-    },
-
-    onInput(e) {
-      let value = e.target.value
-      if (this.filter) {
-        value = this.filter(e)
-        e.target.value = value
-      }
-      this.recalcTextHeight()
-      this.$emit('input', value)
-    },
-
-    onChange() {
-      if (this.$refs.text) this.$emit('change', this.$refs.text.value)
-    },
-
-    onKD(e) {
-      this.$emit('keydown', e)
-    },
-
-    recalcTextHeight() {
-      if (!this.$refs.text || this.line) return
-      this.$refs.text.style.height = '0'
-      this.$refs.text.style.height = this.$refs.text.scrollHeight - this.padding + 'px'
-    },
-
-    focus() {
-      if (this.$refs.text) this.$refs.text.focus()
-    },
-
-    error() {
-      this.wrongValueAnimation = true
-    },
-
-    onAnimationEnd() {
-      this.wrongValueAnimation = false
-    },
-  },
+interface TextInputProps {
+  value?: string | number
+  valid?: string | boolean
+  padding?: number
+  or?: string
+  filter?: (e: Event) => any
+  line?: boolean
+  tabindex?: string
+  password?: boolean
+  width?: string
 }
+
+const emit = defineEmits(['update:value', 'focus', 'blur', 'change', 'keydown'])
+const props = withDefaults(defineProps<TextInputProps>(), { padding: 0, tabindex: '0' })
+
+const textEl = ref<HTMLInputElement | null>(null)
+const state = reactive({ isActive: false, wrongValueAnimation: false })
+
+onMounted(() => {
+  recalcTextHeight()
+})
+
+function onFocus(): void {
+  state.isActive = true
+  emit('focus', textEl?.value)
+}
+
+function onBlur(): void {
+  state.isActive = false
+  if (textEl.value) emit('blur', textEl.value)
+}
+
+function onInput(e: Event): void {
+  let value = (e.target as HTMLInputElement).value
+  if (props.filter) {
+    value = props.filter(e)
+    if (value === undefined) return
+    ;(e.target as HTMLInputElement).value = value
+  }
+  recalcTextHeight()
+  emit('update:value', value)
+}
+
+function onChange(): void {
+  if (textEl.value) emit('change', textEl.value)
+}
+
+function onKD(e: KeyboardEvent): void {
+  emit('keydown', e)
+}
+
+function onAnimationEnd(): void {
+  state.wrongValueAnimation = false
+}
+
+function recalcTextHeight(): void {
+  if (!textEl.value || props.line) return
+  textEl.value.style.height = '0'
+  textEl.value.style.height = `${textEl.value.scrollHeight - props.padding}px`
+}
+
+function focus(): void {
+  if (textEl.value) textEl.value.focus({ preventScroll: true })
+}
+
+function selectAll(): void {
+  if (textEl.value) textEl.value.select()
+}
+
+function error(): void {
+  state.wrongValueAnimation = true
+}
+
+defineExpose<TextInputComponent>({
+  focus,
+  error,
+  recalcTextHeight,
+  selectAll,
+})
 </script>

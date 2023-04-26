@@ -1,0 +1,27 @@
+{
+  "compilerOptions": {
+    // "noUncheckedIndexedAccess": true,
+    "strict": true,
+    "allowJs": false,
+    "moduleResolution": "node",
+    "target": "ESNext",
+    "module": "ESNext",
+    "removeComments": true,
+    "preserveConstEnums": false,
+    "types": [],
+    "outDir": "./addon",
+    "baseUrl": ".",
+    "jsx": "preserve",
+    "paths": {
+      "src/*": ["src/*"]
+    },
+    "skipDefaultLibCheck": true
+  },
+  "include": ["src/**/*.ts", "src/**/*.vue"],
+  "exclude": ["**/__test__/*"],
+  "vueCompilerOptions": {
+    "plugins": [
+      "@volar/vue-language-plugin-pug"
+    ]
+  }
+}
